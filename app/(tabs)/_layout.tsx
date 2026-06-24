@@ -1,68 +1,71 @@
-import { SymbolView } from 'expo-symbols';
-import { Link, Tabs } from 'expo-router';
-import { Platform, Pressable } from 'react-native';
+import { Tabs } from 'expo-router';
+import { Platform, Text } from 'react-native';
 
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+function TabIcon({ emoji, size }: { emoji: string; size: number }) {
+  return <Text style={{ fontSize: size - 4 }}>{emoji}</Text>;
+}
+
+const TAB_BAR_HEIGHT = Platform.OS === 'ios' ? 85 : 65;
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
-      }}>
+        tabBarActiveTintColor: '#E8813A',
+        tabBarInactiveTintColor: '#999999',
+        tabBarStyle: {
+          backgroundColor: '#FFFFFF',
+          borderTopWidth: 1,
+          borderTopColor: '#F0E6D8',
+          height: TAB_BAR_HEIGHT,
+          paddingBottom: Platform.OS === 'ios' ? 25 : 10,
+          paddingTop: 8,
+        },
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: '600',
+        },
+        headerStyle: {
+          backgroundColor: '#FFF5EB',
+        },
+        headerTitleStyle: {
+          fontSize: 20,
+          fontWeight: '700',
+          color: '#3D2B1F',
+        },
+        headerShadowVisible: false,
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: 'chevron.left.forwardslash.chevron.right',
-                android: 'code',
-                web: 'code',
-              }}
-              tintColor={color}
-              size={28}
-            />
-          ),
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable style={{ marginRight: 15 }}>
-                {({ pressed }) => (
-                  <SymbolView
-                    name={{ ios: 'info.circle', android: 'info', web: 'info' }}
-                    size={25}
-                    tintColor={Colors[colorScheme].text}
-                    style={{ opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+          title: 'Dashboard',
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ size }) => <TabIcon emoji="🏠" size={size} />,
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="family-album"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: 'chevron.left.forwardslash.chevron.right',
-                android: 'code',
-                web: 'code',
-              }}
-              tintColor={color}
-              size={28}
-            />
-          ),
+          title: 'Family Album',
+          tabBarLabel: 'Album',
+          tabBarIcon: ({ size }) => <TabIcon emoji="📷" size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="game"
+        options={{
+          title: 'Games',
+          tabBarLabel: 'Games',
+          tabBarIcon: ({ size }) => <TabIcon emoji="🎮" size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="today-status"
+        options={{
+          title: "Today's Status",
+          tabBarLabel: 'My Health',
+          tabBarIcon: ({ size }) => <TabIcon emoji="❤️" size={size} />,
         }}
       />
     </Tabs>

@@ -27,6 +27,13 @@
     "plugins": [
       "expo-router",
       [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow Elderly Welfare Helper to access your photos so you can add them to the Family Album.",
+          "cameraPermission": "Allow Elderly Welfare Helper to use your camera to take photos for the Family Album."
+        }
+      ],
+      [
         "expo-splash-screen",
         {
           "image": "./assets/images/splash-icon.png",
